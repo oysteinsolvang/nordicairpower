@@ -1,1 +1,1 @@
-init
+Statistics for paper on Nordic Air Power cooperation. 
