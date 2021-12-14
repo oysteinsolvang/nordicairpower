@@ -72,10 +72,21 @@ df.acft <- read.csv(url("https://raw.githubusercontent.com/oysteinsolvang/nordic
 df.acft$Generation <- factor(df.acft$Generation,
                              labels=c("4th","4.5","5th"),
                              levels=c(4,4.5,5))
-ggplot(df.acft,aes(x=Country,y=Number,fill=Generation)) +
-    geom_bar(stat="identity",
-             position="stack")
+order.5gen <- c("Italy","Finland","Norway","UK","Netherlands","Switzerland","Belgium","Poland","Denmark","France","Germany","Sweden","Spain","Austria")
+df.acft
+df.acft <- df.acft %>%
+    select(-Type) %>%
+    spread(Generation,Number)
+df.acft[is.na(df.acft)] <- 0
 
+df <- df.acft %>%
+    group_by(Country) %>%
+    gather(allvar,value,"4th":"5th")
+
+ggplot(df,aes(x=Country,y=value,fill=allvar)) +
+    geom_bar(stat="identity",
+             position="stack") +
+    scale_x_discrete(limits=order.5gen)
 
 
 
@@ -83,7 +94,7 @@ ggplot(df.acft,aes(x=Country,y=Number,fill=Generation)) +
 
 ## MAP ##
 
-setwd("/Users/oysteinsolvang/Dropbox/NUPI/memorials")
+#setwd("/Users/oysteinsolvang/Dropbox/NUPI/memorials")
 d2 <- read.csv2("minnesmerker.csv")
 y <- as.numeric(d2$nord)
 x <- as.numeric(d2$øst)
