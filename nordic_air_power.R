@@ -68,7 +68,13 @@ ggsave("cbt.png", width=13,height=10)
 
 
 ## FIGHTER AIRCRAFT STATISTICS ##
-df.acft <- read.csv(url("https://raw.githubusercontent.com/oysteinsolvang/nordicairpower/main/fighter.csv
+df.acft <- read.csv(url("https://raw.githubusercontent.com/oysteinsolvang/nordicairpower/main/fighter_airframes.csv"))
+df.acft$Generation <- factor(df.acft$Generation,
+                             labels=c("4th","4.5","5th"),
+                             levels=c(4,4.5,5))
+ggplot(df.acft,aes(x=Country,y=Number,fill=Generation)) +
+    geom_bar(stat="identity",
+             position="stack")
 
 
 
