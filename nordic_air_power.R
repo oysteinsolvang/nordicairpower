@@ -3,7 +3,6 @@ library(tidyverse)
 library(leaflet)
 library(rgdal) # convert coordinates
 
-
 setwd("/Users/oysteinsolvang/OneDrive - NUPI/nordic air power")
 df.cbt <- read.csv(url("https://raw.githubusercontent.com/oysteinsolvang/nordicairpower/main/cbt.csv"),
                    header = FALSE)
@@ -15,21 +14,22 @@ qra <- ggplot(df.qra,aes(x=year,y=identified)) +
   xlab("Year") +
   ylab("No. of identifications") +
   ggtitle("Aircraft identified by RNoAF QRA since 2000") +
-  bbc_style()
-qra <- qra + geom_curve(aes(x = 2003, y = 71, xend = 2006.7, yend = 88),
-                    colour = "#555555",
-                    size=0.5,
-                    curvature = -0.2,
-                    arrow = arrow(length = unit(0.03, "npc")))
-qra +   geom_label(aes(x = 2000.3, y = 63, label = "Russia intensifies \n long range \n air patrolling"),
-                 hjust = 0,
-                 vjust = 0.5,
-                 lineheight = 0.8,
-                 colour = "#555555",
-                 fill = "white",
-                 label.size = NA,
-                 family="Times",
-                 size = 10)
+  bbc_style() +
+  geom_curve(aes(x = 2003, y = 71, xend = 2006.7, yend = 88),
+    colour = "#555555",
+    size=0.5,
+    curvature = -0.2,
+    arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_label(aes(x = 2000.3, y = 63, label = "Russia intensifies \n long range \n air patrolling"),
+    hjust = 0,
+    vjust = 0.5,
+    lineheight = 0.8,
+    colour = "#555555",
+    fill = "white",
+    label.size = NA,
+    family="Times",
+    size = 10)
+
 ggsave("qra.png", width=13, height=10)
 
 df.cbt <- df.cbt %>%
@@ -46,23 +46,21 @@ cbt <- ggplot(df.cbt,aes(x=Year,y=Events)) +
   ylab("No. of CBT training events") +
   ggtitle("Cross Border Training events per year since 2010") +
   bbc_style()+
-  scale_y_continuous(limits=c(0,90))
-
-cbt <- cbt + geom_curve(aes(x = 2014.5, y = 85, xend = 2012.2, yend = 90),
-                    colour = "#555555",
-                    size=0.5,
-                    curvature = 0.2,
-                    arrow = arrow(length = unit(0.03, "npc")))
-
-cbt +   geom_label(aes(x = 2013, y = 81, label = "Preparations for \n Arctic Challenge Exercise"),
-                 hjust = 0,
-                 vjust = 0.5,
-                 lineheight = 0.8,
-                 colour = "#555555",
-                 fill = "white",
-                 label.size = NA,
-                 family="Times",
-                 size = 10)
+  scale_y_continuous(limits=c(0,90)) +
+  geom_curve(aes(x = 2014.5, y = 85, xend = 2012.2, yend = 90),
+    colour = "#555555",
+    size=0.5,
+    curvature = 0.2,
+    arrow = arrow(length = unit(0.03, "npc"))) +
+  geom_label(aes(x = 2013, y = 81, label = "Preparations for \n Arctic Challenge Exercise"),
+    hjust = 0,
+    vjust = 0.5,
+    lineheight = 0.8,
+    colour = "#555555",
+    fill = "white",
+    label.size = NA,
+    family="Times",
+    size = 10)
 
 ggsave("cbt.png", width=13,height=10)
 
@@ -91,6 +89,9 @@ ggplot(df,aes(x=Country,y=Number,fill=Generation)) +
     theme_classic()
 
 ggsave("fighter_aircraft.png",width=12,height=8)
+
+
+
 
 
 
