@@ -82,13 +82,15 @@ df.acft[is.na(df.acft)] <- 0
 df <- df.acft %>%
     group_by(Country) %>%
     gather(allvar,value,"4th":"5th")
+colnames(df) <- c("Country","Generation","Number")
 
-ggplot(df,aes(x=Country,y=value,fill=allvar)) +
+ggplot(df,aes(x=Country,y=Number,fill=Generation)) +
     geom_bar(stat="identity",
              position="stack") +
-    scale_x_discrete(limits=order.5gen)
+    scale_x_discrete(limits=order.5gen) +
+    theme_classic()
 
-
+ggsave("fighter_aircraft.png",width=12,height=8)
 
 
 
