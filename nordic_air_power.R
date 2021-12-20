@@ -68,10 +68,10 @@ ggsave("cbt.png", width=13,height=10)
 ## FIGHTER AIRCRAFT STATISTICS ##
 df.acft <- read.csv(url("https://raw.githubusercontent.com/oysteinsolvang/nordicairpower/main/fighter_airframes.csv"))
 df.acft$Generation <- factor(df.acft$Generation,
-                             labels=c("4th","4.5","5th"),
-                             levels=c(4,4.5,5))
+                             labels=c("5th","4.5","4th"),
+                             levels=c(5,4.5,4))
 order.5gen <- c("Italy","Finland","Norway","UK","Netherlands","Switzerland","Belgium","Poland","Denmark","France","Germany","Sweden","Spain","Austria")
-df.acft
+#df.acft
 df.acft <- df.acft %>%
     select(-Type) %>%
     spread(Generation,Number)
@@ -79,8 +79,9 @@ df.acft[is.na(df.acft)] <- 0
 
 df <- df.acft %>%
     group_by(Country) %>%
-    gather(allvar,value,"4th":"5th")
+    gather(allvar,value,c("5th","4.5","4th"))
 colnames(df) <- c("Country","Generation","Number")
+df$Generation <- factor(df$Generation, levels=c("4th","4.5","5th"))
 
 ggplot(df,aes(x=Country,y=Number,fill=Generation)) +
     geom_bar(stat="identity",
